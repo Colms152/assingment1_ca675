@@ -1,0 +1,14 @@
+load data local inpath '/mnt/oldbucket/records.txt' overwrite into table data_exch;
+
+INSERT OVERWRITE LOCAL DIRECTORY '/mnt/oldbucket/tfidfdata' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+select OwnerUserId,Body from data_exch where OwnerUserId in (select a from grouped_users_posts);
+
+> hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -file /mnt/pybucket/MapperPhaseOne.py /mnt/pybucket/ReducerPhaseOne.py -mapper "python MapperPhaseOne.py" -reducer "python ReducerPhaseOne.py" -input hdfs://cluster-fe81-m/mappred/inputfile -output hdfs://cluster-fe81-m/mappred1
+
+> hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -file /mnt/pybucket/MapperPhaseTwo.py /mnt/pybucket/ReducerPhaseTwo.py -mapper "python MapperPhaseTwo.py" -reducer "python ReducerPhaseTwo.py" -input hdfs://cluster-fe81-m/mappred1/part-00000 hdfs://cluster-fe81-m/mappred1/part-00001 hdfs://cluster-fe81-m/mappred1/part-00002	 -output hdfs://cluster-fe81-m/mappred2
+
+> hadoop jar /usr/lib/hadoop/hadoop-streaming.jar -file /mnt/pybucket/MapperPhaseThree.py /mnt/pybucket/ReducerPhaseThree.py -mapper "python MapperPhaseThree.py" -reducer "python ReducerPhaseThree.py" -input hdfs://cluster-fe81-m/mappred2/part-00000 hdfs://cluster-fe81-m/mappred2/part-00001 hdfs://cluster-fe81-m/mappred2/part-00002	 -output hdfs://cluster-fe81-m/mappredf
+
+create external table if not exists TFIDF_data2 (Term String,Id int,tfidf float) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';

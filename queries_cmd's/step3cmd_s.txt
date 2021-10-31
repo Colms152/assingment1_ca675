@@ -1,0 +1,13 @@
+create external table if not exists data_exch (Id int, Score int, ViewCount int,Body String, OwnerUserId int, OwnerDisplayName string, Title string, Tags string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+load data local inpath 'mnt/oldBucket/records.txt' overwrite into table data_exch;
+
+select distinct Score,Body from data_exch order by Score desc limit 10;
+
+create table grouped_users_posts as select OwnerUserId as a, Body as b,SUM(Score) as c from data_exch group by OwnerUserId,Body;
+
+select a,c from grouped_users_posts order by c desc limit 10;
+
+select COUNT(DISTINCT OwnerUserId) from data_exch where lower(Body) like '%cloud%';

@@ -1,0 +1,522 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"23627206","1","23627293","","2014-05-13 09:16:54","","18","41429","<p>I'm trying to execute some <code>.sql</code> scripts and then deploy web app using <code>gradle tomcat plugin</code>.</p>
+
+<p>But when I make any attempt to run <code>gradle</code> I've got an error</p>
+
+<p><img src=""https://i.stack.imgur.com/RrJJu.png"" alt=""enter image description here""></p>
+
+<p>My <code>buildscript</code> looks like this</p>
+
+<pre><code>buildscript {
+//repository location
+repositories {
+    mavenCentral()
+    jcenter()
+}
+//dependencies
+//did not divide them into runtime&amp;compile
+dependencies {
+    //aspectJ dependencies
+    compile 'org.aspectj:aspectjlib:1.6.2'
+    compile 'org.aspectj:aspectjrt:1.7.4'
+    compile 'org.aspectj:aspectjweaver:1.7.4'
+    //servlet
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+    //jdbc postresql
+    compile 'org.postgresql:postgresql:9.2-1004-jdbc4'
+    //commons dbcp
+    compile 'commons-dbcp:commons-dbcp:1.2.2' 
+    //spring &amp; spring MVC dependencies
+    compile 'org.springframework:spring-core:' + spring_version
+    compile 'org.springframework:spring-web:' + spring_version
+    compile 'org.springframework:spring-webmvc:' + spring_version
+    compile 'org.springframework:spring-jdbc:' + spring_version
+    compile 'org.springframework:spring-aspects:' + spring_version
+    //spring security
+    compile 'org.springframework.security:spring-security-core:' + spring_security_version
+    compile 'org.springframework.security:spring-security-web:' + spring_security_version
+    compile 'org.springframework.security:spring-security-config:' + spring_security_version
+    //JSTL
+    compile 'jstl:jstl:1.2'
+    //slf4j-log4j
+    compile 'org.slf4j:slf4j-api:1.7.0'
+    compile 'org.slf4j:slf4j-log4j12:1.7.0'
+    compile 'log4j:log4j:1.2.17'
+    //mybatis
+    compile 'org.mybatis:mybatis:3.2.4'
+    compile 'org.mybatis:mybatis-spring:1.2.2'
+    //gson
+    compile 'com.google.code.gson:gson:2.2.4'
+    //validation jsr303
+    compile 'javax.validation:validation-api:1.0.0.GA'
+    //junit4(test?)
+    compile 'junit:junit:4.11'
+    //spring test(test?)
+    compile 'org.springframework:spring-test:' + spring_version
+    //java mail
+    compile 'javax.mail:mail:1.4'
+
+    //tomcat plugin
+    def tomcatVersion = '7.0.53'
+    tomcat ""org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"",
+        ""org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}""
+    tomcat(""org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
+
+    //additional classpath
+    classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.3'
+    classpath 'org.postgresql:postgresql:9.2-1004-jdbc4'
+}
+}
+</code></pre>
+
+<p>In <code>build.gradle</code> there are also several tasks and several <code>apply plugin</code>.</p>
+
+<p>What's the problem? Full stack trace</p>
+
+<p><img src=""https://i.stack.imgur.com/OA0BB.png"" alt=""enter image description here""></p>
+
+<p>My <code>build.gradle</code> is in a project folder.</p>
+","1432980","","","","","2018-06-14 11:51:29","could not find method compile() for arguments","<gradle>","2","0","5","","","CC BY-SA 3.0"
+"41826639","1","","","2017-01-24 11:07:25","","28","41429","<p>I try to use viewPager with the tablayout but when i set adapter with the view pager i'm getting error ""java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.Class java.lang.Object.getClass() on a null object reference"" i don't understand why this error is show.</p>
+
+<p>view pager set Adapter:</p>
+
+<pre><code>viewPager= (ViewPager) findViewById(R.id.viewPager_id);
+  viewPager.setAdapter(newViewPagerAdapterUseThisClass(getSupportFragmentManager(),14));
+</code></pre>
+
+<p>Adapter clss:</p>
+
+<pre><code>class ViewPagerAdapterUseThisClass extends FragmentPagerAdapter {
+    int countTabItem;
+     ViewPagerAdapterUseThisClass(FragmentManager fm,int contTabItem) {
+        super(fm);
+
+        this.countTabItem=contTabItem;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+
+        if(position==0){
+            EnthusamTab enthusamTab=new EnthusamTab();
+            return enthusamTab;
+        }
+
+        return null;
+    }
+
+    @Override
+    public int getCount() {
+        return countTabItem;
+    }
+}
+</code></pre>
+
+<p>view pager xml file:</p>
+
+<pre><code> &lt;android.support.v4.view.ViewPager
+            android:layout_width=""match_parent""
+            android:layout_height=""match_parent""
+            android:layout_below=""@id/tab_layout_id""
+            android:id=""@+id/viewPager_id""/&gt;
+</code></pre>
+
+<p>Error log:</p>
+
+<pre><code>java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.Class java.lang.Object.getClass()' on a null object reference
+                                                                                  at android.support.v4.app.BackStackRecord.doAddOp(BackStackRecord.java:380)
+                                                                                  at android.support.v4.app.BackStackRecord.add(BackStackRecord.java:375)
+                                                                                  at android.support.v4.app.FragmentPagerAdapter.instantiateItem(FragmentPagerAdapter.java:103)
+                                                                                  at android.support.v4.view.ViewPager.addNewItem(ViewPager.java:1034)
+                                                                                  at android.support.v4.view.ViewPager.populate(ViewPager.java:1248)
+                                                                                  at android.support.v4.view.ViewPager.populate(ViewPager.java:1116)
+                                                                                  at android.support.v4.view.ViewPager.onMeasure(ViewPager.java:1642)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.widget.RelativeLayout.measureChildHorizontal(RelativeLayout.java:715)
+                                                                                  at android.widget.RelativeLayout.onMeasure(RelativeLayout.java:461)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.support.v4.widget.DrawerLayout.onMeasure(DrawerLayout.java:1081)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6083)
+                                                                                  at android.widget.FrameLayout.onMeasure(FrameLayout.java:185)
+                                                                                  at android.support.v7.widget.ContentFrameLayout.onMeasure(ContentFrameLayout.java:139)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6083)
+                                                                                  at android.widget.LinearLayout.measureChildBeforeLayout(LinearLayout.java:1464)
+                                                                                  at android.widget.LinearLayout.measureVertical(LinearLayout.java:758)
+                                                                                  at android.widget.LinearLayout.onMeasure(LinearLayout.java:640)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6083)
+                                                                                  at android.widget.FrameLayout.onMeasure(FrameLayout.java:185)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6083)
+                                                                                  at android.widget.LinearLayout.measureChildBeforeLayout(LinearLayout.java:1464)
+                                                                                  at android.widget.LinearLayout.measureVertical(LinearLayout.java:758)
+                                                                                  at android.widget.LinearLayout.onMeasure(LinearLayout.java:640)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.view.ViewGroup.measureChildWithMargins(ViewGroup.java:6083)
+                                                                                  at android.widget.FrameLayout.onMeasure(FrameLayout.java:185)
+                                                                                  at com.android.internal.policy.DecorView.onMeasure(DecorView.java:689)
+                                                                                  at android.view.View.measure(View.java:19861)
+                                                                                  at android.view.ViewRootImpl.performMeasure(ViewRootImpl.java:2275)
+                                                                                  at android.view.ViewRootImpl.measureHierarchy(ViewRootImpl.java:1366)
+                                                                                  at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:1619)
+                                                                                  at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:1254)
+                                                                                  at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:6343)
+                                                                                  at android.view.Choreographer$CallbackRecord.run(Choreographer.java:874)
+                                                                                  at android.view.Choreographer.doCallbacks(Choreographer.java:686)
+                                                                                  at android.view.Choreographer.doFrame(Choreographer.java:621)
+                                                                                  at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:860)
+                                                                                  at android.os.Handler.handleCallback(Handler.java:751)
+                                                                                  at android.os.Handler.dispatchMessage(Handler.java:95)
+                                                                                  at android.os.Looper.loop(Looper.java:154)
+                                                                                  at android.app.ActivityThread.main(ActivityThread.java:6126)
+                                                                                  at java.lang.reflect.Method.invoke(Native Method)
+                                                                                  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:886)
+                                                                                  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:776)
+</code></pre>
+","6449188","","","","","2019-07-06 08:34:08","java.lang.Class java.lang.Object.getClass()' on a null object reference","<android><xml><nullpointerexception><android-viewpager>","10","3","4","","","CC BY-SA 3.0"
+"8723716","1","8729614","","2012-01-04 08:02:24","","33","41429","<p>I can create a project in Gerrit through:</p>
+
+<pre><code>ssh –p 29418 [ip-address] gerrit create-project --name [project-name]
+</code></pre>
+
+<p>But, how can I delete any project? I haven't see related commands or buttons on web page.</p>
+","1077031","","1469208","","2014-10-14 06:30:02","2019-09-05 23:49:52","Delete a project in Gerrit","<git><gerrit>","6","0","9","","","CC BY-SA 3.0"
+"623861","1","624002","","2009-03-08 16:46:26","","37","41429","<p>When I read the xml through a URL's InputStream, and then cut out everything except the url, I get ""<a href=""http://cliveg.bu.edu/people/sganguly/player/%20Rang%20De%20Basanti%20-%20Tu%20Bin%20Bataye.mp3"" rel=""noreferrer"">http://cliveg.bu.edu/people/sganguly/player/%20Rang%20De%20Basanti%20-%20Tu%20Bin%20Bataye.mp3</a>"". </p>
+
+<p>As you can see, there are a lot of ""%20""s.</p>
+
+<p>I want the url to be unescaped.</p>
+
+<p>Is there any way to do this in Java, without using a third-party library?</p>
+","75268","penchant","75268","penchant","2009-03-09 23:07:53","2021-01-05 22:07:05","How do you unescape URLs in Java?","<java><url-encoding>","3","3","1","","","CC BY-SA 2.5"
+"36188512","1","","","2016-03-23 20:55:34","","21","41429","<p>I have a Jenkins job with 100+ builds. I need to search through all the builds of that job to find builds that have a certain string in the console output. Is there any plugin for that? How do I do that?</p>
+","1550159","","172599","","2016-03-23 23:52:12","2021-03-10 12:49:21","Search through console output of a Jenkins job","<jenkins><jenkins-plugins><console-output>","8","0","5","","","CC BY-SA 3.0"
+"37751179","1","37751413","","2016-06-10 14:47:44","","42","41429","<p>so jQuery 3.0 was released today, and for some reason the following code no longer works on my site:</p>
+
+<pre><code>$(window).load(function() {});
+</code></pre>
+
+<p>Can anyone suggest how I fix this or an alternative that actives when /everything/ is loaded?</p>
+","5577674","","4801920","","2016-06-10 14:54:43","2018-04-24 21:35:20","jQuery 3.0 $(window).load(function(){});","<jquery>","1","3","6","","","CC BY-SA 3.0"
+"218162","1","218917","","2008-10-20 11:55:06","","27","41429","<p>I have an XHTML strict page that has an invisible div that is controlled by Javascript. The div is set to transparent and visible by the script and a mouseover event to make the div opaque on hover.</p>
+
+<p>When someone using a browser (or firefox with noscript) without javascript the div simply remains invisible. The problem with this is that I do not want the content to be inaccessible. I also do not want to leave the div visible then use the script to make it transparent as the div is located at the bottom of the document and it causes a noticeable flicker whenever a page loads.</p>
+
+<p>I have tried using noscript tags to embed an additional style sheet that is only loaded for people without the luxury of Javascript but this fails the XHTML strict validation. Is there any other way to include extra styling information inside a noscript block that is XHTML valid?</p>
+
+<p><strong>Ed:</strong></p>
+
+<p>With a simple test case I get a validation error of: <strong>document type does not allow element ""style"" here.</strong>
+This is with an empty XHTML Strict document with a style element inside a noscript element. The noscript is inside the body.</p>
+","11753","","11753","","2008-10-20 12:04:37","2016-08-15 07:02:12","Embedding extra styles with noscript","<css><xhtml>","7","1","10","","","CC BY-SA 2.5"
+"43070900","1","43076442","","2017-03-28 13:26:16","","19","41429","<p>I have built a C++ app on a VM Ubuntu 16.04 on which I have installed g++ compiler 6.2.0 in order to support C++14 features. When I tried to run it on new clean VM 16.04 which has default the g++ 5.4.0 the error  <strong>/usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.22' not found</strong> pops up.<br>
+I've noticed that on the VM with the updated compiler library libstdc++.so.6.0.22 has been installed. On the clean VM I'd like to avoid to update the compiler so I tried to install only the latest libstdc++6 package. However the library that was installed was libstdc++.so.6.0.21 and so the problem persisted. How can I install specifically the libstdc++.so.6.0.22 version?</p>
+","3768183","","","","","2020-07-23 10:59:09","Version `GLIBCXX_3.4.22' not found","<c++><ubuntu-16.04><libstdc++>","2","1","7","","","CC BY-SA 3.0"
+"8492009","1","8492033","","2011-12-13 15:46:28","","11","41429","<p>How do you select a datetime column by month?</p>
+
+<pre><code>TABLE A
+TITLE   MY_DATETIME   
+blah    2011-03-26 05:44:43.213
+
+SELECT * 
+FROM TABLE A
+WHERE MY_DATETIME = ""August""
+</code></pre>
+","147915","","184112","","2011-12-13 15:51:37","2020-11-23 09:31:34","MS SQL select a datetime by month?","<sql><sql-server>","4","3","0","","","CC BY-SA 3.0"
+"9142356","1","9142375","","2012-02-04 16:24:37","","12","41428","<pre><code>&lt;input type=""text"" /&gt;
+</code></pre>
+
+<p>How can I write the number of characters from <code>input</code> on <code>.keyup</code> in JavaScript/jQuery?</p>
+","1174737","","","","","2017-07-14 18:04:59","Simple way to count characters using .keyup in jQuery","<javascript><jquery><onkeyup>","2","0","2","","","CC BY-SA 3.0"
+"9769587","1","","","2012-03-19 11:47:56","","49","41428","<p>I'm looking for a CSS solution to the following:-</p>
+
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-html lang-html prettyprint-override""><code>&lt;div style=""display:inline;""&gt;
+     &lt;div&gt;The content of this div is dynamically created but will always be wider than
+              the below div. 
+     &lt;/div&gt;
+     &lt;div&gt; Need this div to have the same width as the above div.
+     &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>The wrapper <code>div</code> has an inline display and works as expected, both child divs have dynamically generated content. I need the bottom one to take the width of the previous sibling.</p>
+
+<p>Many thanks for any suggestions in advance. </p>
+","1278456","","556678","","2017-01-04 06:35:37","2021-03-01 20:10:10","Set div to have its siblings width","<html><css>","8","8","7","","","CC BY-SA 3.0"
+"5196614","1","5197037","","2011-03-04 16:36:40","","11","41428","<p>This is what I'm trying to accomplish:</p>
+
+<pre>
++--------screen-----------------------+
+|       ______________________      |*|
+|       |_static_header______|      |*|
+|       |             |      |      |*|
+|       | content     |menu  |      |*|
+|       | scrollable  |static|      |*|
+|       |             |      |      |*|
+|       |             |      |      |*|
+|       |             |      |      |*|
++-------------------------------------+
+</pre>
+
+<p>The content is of variable height, and the content scrollbar must be show in the page body (and not on it's on area).
+I managed to get the basic idea, but I'm having trouble to getting the content div in it's correct position when the scrollbar shows, and even if I set to always show the scrollbars, I can't use a fixed width because they differ from browser to browser.</p>
+
+<pre><code>&lt;div style=""position:absolute; background-color:Transparent; left:0px; right:0px; height:100px; z-index:2;""&gt;
+    &lt;div style=""background-color:Silver; width:1000px; height:100px; margin:0 auto;""&gt;
+        Header
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Fixed div acting as the body ""page"" so the scrollbar shows as the page's --&gt;
+&lt;div style=""position:absolute; left:0px; top:0px; bottom:0px; right:0px; overflow-y:auto; padding-top:100px; z-index:1;""&gt;
+    &lt;div style=""position:relative; width:800px; height:100%; margin:0 auto; padding-right:200px;""&gt;
+        &lt;div style=""background-color:Orange; width:100%; height:900px;""&gt;
+            Content
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=""position:absolute; left:50%; right:0px; padding-top:100px; z-index:0;""&gt;
+    &lt;div style=""width:500px; float:left;""&gt;
+        &lt;div style=""background-color:Green; float:right; width:200px; ""&gt;
+            Menu
+        &lt;/div&gt;            
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>In code above the content is off by the scrollbar width, how can I get it right with the rest of the page (ie. calculating it's position without considering the scrollbar width, even if it has one)?</p>
+","645107","","","","","2018-11-12 03:20:48","Static header + menu, scrollable body","<css><layout><header><menu>","5","4","3","","","CC BY-SA 2.5"
+"9385689","1","9385924","","2012-02-21 21:47:05","","9","41428","<p>I have 2 strings, strStartTime and strEndTime.</p>
+
+<p>strStartTime = ""12:32:54""
+strEndTime = ""12:33:05""</p>
+
+<p>I want to find out how many seconds elapsed between strStartTime and strEndTime so I did this:</p>
+
+<pre><code>Dim dtDuration as date
+dtDuration = DateDiff(""s"", CDate(strStartTime), CDate(strEndTime))  
+</code></pre>
+
+<p>The result I get is dtDuration = ""#1/10/1900#"" in the Locals watch window.</p>
+
+<p>Why does this happen?  How do I get dtDuration to equal 11 for the 11 seconds that elapsed between the start and end times?</p>
+","867420","","3043","","2012-02-23 03:43:48","2012-02-23 03:43:48","How to calculate elapsed time in seconds in VBA?","<vba><datediff>","1","0","1","","","CC BY-SA 3.0"
+"14655023","1","14655145","","2013-02-01 21:05:02","","54","41428","<p>To make things simple:</p>
+
+<pre><code>string streamR = sr.ReadLine();  // sr.Readline results in:
+                                 //                         one ""two two""
+</code></pre>
+
+<p>I want to be able to save them as two different strings, remove all spaces EXCEPT for the spaces found between quotation marks. Therefore, what I need is:</p>
+
+<pre><code>string 1 = one
+string 2 = two two
+</code></pre>
+
+<p>So far what I have found that works is the following code, but it removes the spaces within the quotes.</p>
+
+<pre><code>//streamR.ReadLine only has two strings
+  string[] splitter = streamR.Split(' ');
+    str1 = splitter[0];
+    // Only set str2 if the length is &gt;1
+    str2 = splitter.Length &gt; 1 ? splitter[1] : string.Empty;
+</code></pre>
+
+<p>The output of this becomes</p>
+
+<pre><code>one
+two
+</code></pre>
+
+<p>I have looked into <a href=""https://stackoverflow.com/questions/554013/regular-expression-to-split-on-spaces-unless-in-quotes"">Regular Expression to split on spaces unless in quotes</a> however I can't seem to get regex to work/understand the code, especially how to split them so they are two different strings. All the codes there give me a compiling error (I am using <code>System.Text.RegularExpressions</code>)</p>
+","2033851","","880990","","2019-02-25 15:23:03","2019-02-25 15:23:03","Split a string that has white spaces, unless they are enclosed within ""quotes""?","<c#><split>","7","4","15","","","CC BY-SA 4.0"
+"18204990","1","","","2013-08-13 09:09:40","","6","41428","<p>I am trying to configure the stout to save into a file.
+ However, it is not saved to a file - do you have an idea why?.
+ also - I want the log file name would be configurable inside the logback.xml
+ something like {LOG_FILE_NAME} which will come from the cmd - is it possible? </p>
+
+<p>This is my logback.xml:</p>
+
+<pre><code> &lt;?xml version=""1.0"" encoding=""UTF-8""?&gt;
+
+&lt;!-- For assistance related to logback-translator or configuration  --&gt;
+&lt;!-- files in general, please contact the logback user mailing list --&gt;
+&lt;!-- at http://www.qos.ch/mailman/listinfo/logback-user             --&gt;
+&lt;!--                                                                --&gt;
+&lt;!-- For professional support please see                            --&gt;
+&lt;!--    http://www.qos.ch/shop/products/professionalSupport         --&gt;
+&lt;!--                                                                --&gt;
+&lt;configuration&gt;
+  &lt;appender name=""defaultLog"" class=""ch.qos.logback.core.rolling.RollingFileAppender""&gt;
+    &lt;!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender--&gt;
+    &lt;File&gt;sarit_test.log&lt;/File&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%d{dd MMM yyyy HH:mm:ss.SSS} [%t] %-5p %x %F:%L - %m&lt;/pattern&gt;
+    &lt;/encoder&gt;
+    &lt;rollingPolicy class=""ch.qos.logback.core.rolling.FixedWindowRollingPolicy""/&gt;
+    &lt;triggeringPolicy class=""ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy""&gt;
+      &lt;MaxFileSize&gt;50000KB&lt;/MaxFileSize&gt;
+    &lt;/triggeringPolicy&gt;
+  &lt;/appender&gt;
+  &lt;root level=""INFO""&gt;
+    &lt;appender-ref ref=""defaultLog""/&gt;
+  &lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre>
+","2604124","","2604124","","2013-08-13 09:17:47","2020-01-22 18:10:02","Logback.xml configuration","<logback>","5","0","4","","","CC BY-SA 3.0"
+"29379890","1","29400310","","2015-03-31 22:47:14","","50","41428","<p>Are there some way to import the new Facebook SDK for Android to Eclipse without Gradle or Maven (something like the past way)? I've been watching some pages but i don't find a the way.</p>
+
+<p>Thanks</p>
+","4068310","","1235698","","2015-04-13 20:29:16","2017-01-06 02:13:44","Android Facebook SDK 4 in Eclipse","<android><facebook><facebook-sdk-4.0>","4","1","34","","","CC BY-SA 3.0"
+"12133791","1","12134118","","2012-08-26 20:48:53","","9","41427","<p>I just stumbled on a problem where the shared border between a menu bar and the main content box does not go on properly (as the content box is too small)</p>
+
+<p>Image: <a href=""http://imgur.com/O3ra9"" rel=""noreferrer"">http://imgur.com/O3ra9</a></p>
+
+<p>Code: <a href=""http://jsfiddle.net/gh55e/2/"" rel=""noreferrer"">http://jsfiddle.net/gh55e/2/</a></p>
+
+<p>So I was wondering if there was a way to fix the border. Maybe by giving them both one and making it overlap? Just have no idea how to do this as margin -x doesn't work. </p>
+","1608765","","1608765","","2012-08-26 21:30:58","2020-10-27 14:16:33","CSS: Overlapping borders","<css>","2","3","1","","","CC BY-SA 3.0"
+"11561608","1","11561743","","2012-07-19 13:11:35","","17","41427","<p>Let say I have a URL: <code>http://java.sun.com/j2se/1.5/pdf</code> I want to get a list of all files/directories under the <code>pdf</code> directory.</p>
+
+<p>I'm using Java 5.</p>
+
+<p>I can get the list of dir with this program <a href=""http://www.httrack.com/"" rel=""nofollow noreferrer"">http://www.httrack.com/</a>, but with Java I don't know if it is possible.</p>
+
+<p>Does any body know how to get it in Java? Or how can this program do the job if Java can't?</p>
+","1092450","","452775","","2020-05-06 11:25:08","2020-05-06 11:25:08","How to get list of files/directories of an directory URL?","<java><url>","2","2","7","","","CC BY-SA 4.0"
+"13705087","1","13705282","","2012-12-04 14:24:49","","5","41426","<p>I downloaded a Java project that I want to study and learn some things from. When I downloaded it on another computer it worked great, but when I try it on my computer, nearly every declaration and import is given the error message ""<strong>*</strong> cannot be resolved to a type"" or ""The import java.awt cannot be resolved"".</p>
+
+<p>I did some research on this site and found that it might have to do with not having the latest Java installed. I checked mine, and I have JavaSE-1.7 (unbound). So I have the latest version but it's (unbound)? </p>
+
+<p>Can this be the problem? And what does (unbound) mean?</p>
+
+<p><strong>I'm using Eclipse  3.3.2</strong></p>
+
+<p>UPDATE: I just found this error message at the top of the Properties window: <strong>org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</strong>. What does this mean?</p>
+","1675976","","1675976","","2012-12-04 14:40:45","2019-03-01 01:33:32","""The import java.awt cannot be resolved"" and "" ***** cannot be resolved to a type""","<java><eclipse>","3","9","","","","CC BY-SA 3.0"
+"1705525","1","1705638","","2009-11-10 03:53:15","","8","41426","<p>I'm using jQuery to drive my AJAX UI. I have a table of data, and I want to allow the user to reorder the columns in the table by dragging and dropping them. I'd like the user to be able to grab the header for a column and move it. The row of data underneath should follow. Note that I'm <em>not</em> interested in sorting the data or in reordering rows, but in allowing the user to change the order of the columns.</p>
+
+<p>Is there an existing solution? I tried using the standard jQuery sortable call on the <code>&lt;th&gt;</code> elements, but of course that doesn't work. I browsed through the jQuery plugins site and didn't find anything. Will I need to write a jQuery plugin?</p>
+
+<p>Edit: Note that jQuery, Dojo, etc. (the free ones) are really the only option for a JS framework. I can't get a license for anything commercial like ExtJS.</p>
+","10140","","10140","","2009-11-10 18:27:51","2017-08-23 11:18:56","Drag and drop sorting of table columns with jQuery","<jquery><jquery-ui><sorting><drag-and-drop>","7","2","5","","","CC BY-SA 2.5"
+"34117191","1","34121884","","2015-12-06 12:03:41","","22","41425","<p>I am currently trying to build my ts files into a single ts files. The issue I'm getting is that my code below isn't doing what I thought it would. I used sourceRoot to attempt to set the only place it could get the source from but that didn't work. I have also tried putting a . infront of the directory but it still pulls from everywhere :(</p>
+
+<pre class=""lang-js prettyprint-override""><code>{
+   ""compilerOptions"": {
+       ""target"": ""ES5"",
+       ""noImplicitAny"": true,
+       ""removeComments"": true,
+       ""preserveConstEnums"": true,
+       ""out"": ""www/js/app.js"",
+       ""sourceMap"": true,
+       ""sourceRoot"": ""www/app""
+   }
+}
+</code></pre>
+
+<p>all files including those not inside of www/app build :(</p>
+
+<p>for now I've moved back to manually specifying the files:</p>
+
+<pre class=""lang-js prettyprint-override""><code>{
+    ""compilerOptions"": {
+        ""target"": ""ES5"",
+        ""noImplicitAny"": true,
+        ""removeComments"": true,
+        ""preserveConstEnums"": true,
+        ""out"": ""www/js/app.js"",
+        ""sourceMap"": true
+    },
+    ""files"": [
+        ""./www/app/app.ts"",
+        ""./www/app/menu/menuController.ts"",
+        ""./www/app/playlists/playlistsController.ts""
+    ]
+}
+</code></pre>
+
+<p>is it possible to restrict the source directories to be only www/app?</p>
+
+<p>Thanks</p>
+","1332999","","","","","2019-08-10 09:21:29","tsconfig.json - Only build ts files from folder","<typescript>","4","0","0","","","CC BY-SA 3.0"
+"42080123","1","42080223","","2017-02-07 01:21:32","","9","41425","<p>I was wondering how to justify how much space is allowed in <code>justify-content: space-between</code> for flexbox.</p>
+
+<p>Currently, my items are spaced but they have way too much space between them I want just a little space between them so they can settle somewhere in the middle in a row.</p>
+
+<p>The snippet below will hopefully clarify what I'm struggling with.</p>
+
+<p>Let me know if you need me to clarify further. Thanks! </p>
+
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-css lang-css prettyprint-override""><code>#qwrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.row {
+  flex: 0 auto;
+  height: 100px;
+  margin: 0;
+}
+#lighticon {
+  padding-bottom: 30px;
+}
+@media (max-width: 800px) {
+  #qwrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media screen and (max-width: 480px) {
+  #qwrapper {
+    flex-wrap: wrap;
+  }
+  .row {}
+}
+@media only screen and (min-width: 760px) {
+  #qwrapper {
+    justify-content: space-between;
+    margin: 10px;
+  }
+  #lighticon {
+    position: relative;
+    margin-left: 100px;
+  }
+}</code></pre>
+<pre class=""snippet-code-html lang-html prettyprint-override""><code>&lt;div id=""qwrapper""&gt;
+
+  &lt;h3 id=""michelle"" class=""row""&gt;""She always thinks of her clients.""
+&lt;br&gt;
+   
+&lt;/h3&gt;
+
+  &lt;img src=""https://cdn4.iconfinder.com/data/icons/black-icon-social-media/512/099310-feedburner-logo.png"" class=""row"" alt="""" id=""lighticon"" /&gt;
+
+  &lt;h3 id=""jerry"" class=""row""&gt;""Very smart, creative person, problem solver.""
+&lt;br&gt;
+
+
+&lt;/h3&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+","5354898","","5354898","","2018-02-19 16:27:13","2019-10-30 15:15:20","Controlling the amount of space in justify-content: space-between","<html><css><flexbox>","5","2","1","","","CC BY-SA 3.0"
+"1673544","1","1673574","","2009-11-04 12:40:20","","23","41425","<p>Suppose I have a string that contains Ü. How would I find all those unicode characters? Should I test for their code? How would I do that?</p>
+
+<p>For example, given the string ""AÜXÜ"", I'd like to transform it to ""AYXY"". I'd like to do the same for other unicode characters, and I would hate to have to store them in a translation map of some sort.</p>
+","31610","","","","","2019-03-04 08:08:12","How do I detect unicode characters in a Java string?","<java><string><unicode>","6","3","4","","","CC BY-SA 2.5"
